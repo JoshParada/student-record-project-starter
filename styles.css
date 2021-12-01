@@ -1,0 +1,56 @@
+body{
+    background-image: url("class.jpeg");
+    background-size: cover;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 25px;
+}
+.container{
+    opacity: 80%;
+    
+}
+.column{
+    width: 45%;
+    float: left;
+}
+.row{
+    width: 50%;
+}
+.studentform{
+    text-align: center;
+    
+    margin: 0px;
+    background-color: lightblue;
+    border-radius: 10%;
+    float: left;
+    padding: 20px;
+    margin: 0px 30px;
+}
+.sort{
+    text-align: center;
+   
+}
+.table{
+    display: inline;
+}
+.studenttable{
+    text-align: center;
+    background-color: lightblue;
+    border-radius: 10%;
+    margin-top: 30px;
+}
+th{
+    padding:5px 15px;
+}
+#submitStudent, #sortbtn{
+    background-color: blue;
+    color: white;
+    border-radius: 10%;
+    border: 1px solid gray;
+    height: 30px;
+}
+input[type=text]{
+    height: 20px;
+}
+select{
+    height: 30px;
+}

@@ -1,8 +1,3 @@
-//  Array of Students
-let studentArray: Student[] = [];
-let sortedStdArr: Student[] = [];
-
-
 //  Student type
 type Student = {
     fname: string
@@ -11,11 +6,14 @@ type Student = {
     grade: number | string
 }
 
+//  Array of Students
+let studentArray: Student[] = [];
+let sortedStdArr: Student[] = [];
+
 
 //  Adds Student type to Student Array
 function addStudent(fname: string, lname: string, coursename: string, grade: number | string): void {
-    let newStudent: Student = { fname: fname, lname: lname, coursename: coursename, grade: grade }
-    studentArray.push(newStudent);
+    studentArray.push({ fname: fname, lname: lname, coursename: coursename, grade: grade });
 }
 
 
@@ -39,14 +37,9 @@ function passfail(grade: string | number): string {
 //  Sorts grades in Ascending/Descending order
 function gradeSort(order: string): Student[] {
     if (order === 'Ascending') {
-        let sortedArray = studentArray.sort((a, b) => (a.grade > b.grade) ? 1 : -1)
-        console.log(sortedArray)
-        return sortedArray
+        return studentArray.sort((a, b) => (a.grade > b.grade) ? 1 : -1)
     } else {
-        let sortedArray = studentArray.sort((a, b) => (a.grade < b.grade) ? 1 : -1)
-        console.log(sortedArray)
-
-        return sortedArray
+        return studentArray.sort((a, b) => (a.grade < b.grade) ? 1 : -1)
     }
 }
 
@@ -63,7 +56,8 @@ function displayTable(stdtable: Student[]) {
                 <td>${stdtable[i].coursename}</td>
                 <td>${stdtable[i].grade}</td>
                 <td>${passfail(stdtable[i].grade)}</td>
-                `
+                <td <button class="remove">Remove</button></td>
+                `;
         studentTable.appendChild(stdRecord)
     }
 
@@ -75,7 +69,7 @@ function clearTable() {
     let studentTable = <NodeListOf<Element>>document.querySelectorAll('.tbrow');
     //console.log(studentTable)
     studentTable.forEach(function (item) {
-        item.innerHTML = ''
+        item.remove()
     })
 }
 
@@ -84,7 +78,7 @@ function clearTable() {
 document.addEventListener('DOMContentLoaded', e => {
 
     //  Student submittal form
-    document.getElementById("submitStudent").addEventListener("click", e => {
+    document.getElementById("submitStudent")?.addEventListener("click", e => {
         e.preventDefault();
 
         let fname: string = (<HTMLInputElement>document.getElementById("fname")).value;
@@ -94,6 +88,7 @@ document.addEventListener('DOMContentLoaded', e => {
 
         if (fname === '' || lname === '' || coursename === '' || grade === '') {
             alert("Please fill entire form!")
+            
         } else {
             addStudent(fname, lname, coursename, grade);
             clearTable();
@@ -115,6 +110,27 @@ document.addEventListener('DOMContentLoaded', e => {
         sortedStdArr = gradeSort(order);
         clearTable()
         displayTable(sortedStdArr);
-
     })
+
+
+    //  Remove button
+    document.body.addEventListener('click', e => {
+        //console.log(e.target)
+        if(e.target.className === 'remove'){
+            //console.log(e.target)
+            let tr = e.target.parentNode;
+            let rowtext = e.target.parentNode.firstElementChild.textContent;
+            let rowtextindex = 0;
+            console.log(rowtext)
+            tr.remove();
+            for(let i = 0; i < studentArray.length;i++){
+                if(studentArray[i].fname === rowtext){
+                    rowtextindex = i
+                }
+            }
+            studentArray.splice(rowtextindex,1)
+            console.log(studentArray);
+        }
+    })
+
 })

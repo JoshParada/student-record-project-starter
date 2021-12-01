@@ -4,8 +4,7 @@ let studentArray = [];
 let sortedStdArr = [];
 //  Adds Student type to Student Array
 function addStudent(fname, lname, coursename, grade) {
-    let newStudent = { fname: fname, lname: lname, coursename: coursename, grade: grade };
-    studentArray.push(newStudent);
+    studentArray.push({ fname: fname, lname: lname, coursename: coursename, grade: grade });
 }
 //  Validates whether student passed or failed
 function passfail(grade) {
@@ -25,14 +24,10 @@ function passfail(grade) {
 //  Sorts grades in Ascending/Descending order
 function gradeSort(order) {
     if (order === 'Ascending') {
-        let sortedArray = studentArray.sort((a, b) => (a.grade > b.grade) ? 1 : -1);
-        console.log(sortedArray);
-        return sortedArray;
+        return studentArray.sort((a, b) => (a.grade > b.grade) ? 1 : -1);
     }
     else {
-        let sortedArray = studentArray.sort((a, b) => (a.grade < b.grade) ? 1 : -1);
-        console.log(sortedArray);
-        return sortedArray;
+        return studentArray.sort((a, b) => (a.grade < b.grade) ? 1 : -1);
     }
 }
 //  Displays array as Table
@@ -47,6 +42,7 @@ function displayTable(stdtable) {
                 <td>${stdtable[i].coursename}</td>
                 <td>${stdtable[i].grade}</td>
                 <td>${passfail(stdtable[i].grade)}</td>
+                <td <button class="remove">Remove</button></td>
                 `;
         studentTable.appendChild(stdRecord);
     }
@@ -56,14 +52,14 @@ function clearTable() {
     let studentTable = document.querySelectorAll('.tbrow');
     //console.log(studentTable)
     studentTable.forEach(function (item) {
-        item.innerHTML = '';
+        item.remove();
     });
 }
 //  Student submittal form
 document.addEventListener('DOMContentLoaded', e => {
-    var _a;
+    var _a, _b;
     //  Student submittal form
-    document.getElementById("submitStudent").addEventListener("click", e => {
+    (_a = document.getElementById("submitStudent")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", e => {
         e.preventDefault();
         let fname = document.getElementById("fname").value;
         let lname = document.getElementById("lname").value;
@@ -84,11 +80,30 @@ document.addEventListener('DOMContentLoaded', e => {
         }
     });
     //  Sorting button
-    (_a = document.getElementById("sortbtn")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", e => {
+    (_b = document.getElementById("sortbtn")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", e => {
         e.preventDefault();
         let order = document.getElementById("order").value;
         sortedStdArr = gradeSort(order);
         clearTable();
         displayTable(sortedStdArr);
+    });
+    //  Remove button
+    document.body.addEventListener('click', e => {
+        //console.log(e.target)
+        if (e.target.className === 'remove') {
+            //console.log(e.target)
+            let tr = e.target.parentNode;
+            let rowtext = e.target.parentNode.firstElementChild.textContent;
+            let rowtextindex = 0;
+            console.log(rowtext);
+            tr.remove();
+            for (let i = 0; i < studentArray.length; i++) {
+                if (studentArray[i].fname === rowtext) {
+                    rowtextindex = i;
+                }
+            }
+            studentArray.splice(rowtextindex, 1);
+            console.log(studentArray);
+        }
     });
 });

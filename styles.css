@@ -37,6 +37,7 @@ body{
     background-color: lightblue;
     border-radius: 10%;
     margin-top: 30px;
+    padding: 15px;
 }
 th{
     padding:5px 15px;
@@ -53,4 +54,11 @@ input[type=text]{
 }
 select{
     height: 30px;
+}
+.remove{
+    border-radius: 20%;
+    text-decoration: underline;
+}
+.remove:hover{
+    color: red;
 }
